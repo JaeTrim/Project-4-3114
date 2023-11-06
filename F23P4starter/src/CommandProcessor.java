@@ -1,0 +1,51 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class CommandProcessor {
+
+    private World world;
+
+    public CommandProcessor(int hashSize, String file)
+        throws FileNotFoundException {
+        world = new World(hashSize, file);
+        readFile(file);
+    }
+
+
+    private void readFile(String name) throws FileNotFoundException {
+        File file = new File(name);
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String currentLine = scanner.nextLine();
+            if (currentLine.contains("remove")) {
+                String[] removeLine = currentLine.split("\\s+");
+                String removeType = removeLine[1];
+                String typeName = "";
+                for (int i = 2; i < removeLine.length; i++) {
+                    typeName += removeLine[i] + " ";
+                }
+                typeName = typeName.trim();
+
+                world.remove(removeType, typeName);
+            }
+            else if (currentLine.contains("insert")) {
+                currentLine = currentLine.substring("insert".length()).trim();
+                Scanner tempScanner = new Scanner(currentLine).useDelimiter(
+                    "<SEP>");
+                String insertType = tempScanner.next().trim();
+                String typeName = tempScanner.next().trim();
+                System.out.println(insertType);
+                world.insert(insertType, typeName);
+                tempScanner.close();
+            }
+            else if (currentLine.contains("print")) {
+                String[] printLine = currentLine.split("\\s+");
+                String typeName = printLine[1];
+                world.print(typeName);
+            }
+        }
+        scanner.close();
+    }
+
+}
