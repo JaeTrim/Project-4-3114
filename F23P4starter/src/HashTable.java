@@ -3,13 +3,12 @@ public class HashTable {
 
     private int hashSize;
     private int recordCount;
-    public Record[] table;
+    private Record[] hashTable;
 
     public HashTable(int hashSize) {
         this.hashSize = hashSize;
-        table = new Record[hashSize];
+        hashTable = new Record[hashSize];
         recordCount = 0;
-        Hash hash = new Hash();
     }
 
 
@@ -19,7 +18,7 @@ public class HashTable {
 
 
     public Record[] getArr() {
-        return table;
+        return hashTable;
     }
 
 
@@ -29,64 +28,67 @@ public class HashTable {
 
 
     public void insert(Record record) {
-        if (seminarCount >= (hashSize / 2)) {
+        if (recordCount >= (hashSize / 2)) {
             rehash();
             System.out.println("Hash table expanded to " + hashSize
                 + " records");
         }
-        record.setId(id);
-        int key = keyFinder1(id);
-        while ((hashTable[key] != null) && (hashTable[key].getId() != -1)) {
-            key = keyFinder2(id, key);
+        int index = Hash.h(record.getKey(), hashSize);
+        while ((hashTable[index] != null) && (hashTable[index]
+            .getIndex() != -1)) {
+            index = Hash.h(record.getKey(), hashSize);
         }
-        record.setKey(key);
-        hashTable[record.getKey()] = record;
-        seminarCount++;
-        }
+        record.setIndex(index);
+        // record.setKey(key);
+        hashTable[record.getIndex()] = record;
+        recordCount++;
+
+    }
 
 
     public void delete(String title) {
-        int found = this.search(id);
+        int found = this.search(title);
 
         if (found != -1) {
             Record temp = new Record();
-            temp.setId(-1);
-            temp.setKey(found);
+            temp.setKey("tombstone");
+            temp.setIndex(found);
             hashTable[found] = temp;
-            System.out.println("Record with ID " + id
+            System.out.println("Record with ID " + title
                 + " successfully deleted from the database");
-            seminarCount--;
+            recordCount--;
         }
         else {
             System.out.println("Delete FAILED -- There is no record with ID "
-                + id);
+                + title);
         }
     }
 
 
-    public void search(String title) {
+    public int search(String title) {
         int found = -1;
-        int key = keyFinder1(id);
+        int key = Hash.h(title, hashSize);
         while (hashTable[key] != null) {
-            if (hashTable[key].getId() == id) {
+            if (hashTable[key].getKey().equals(title)) {
                 found = key;
                 return found;
             }
             else {
-                key = keyFinder2(id, key);
+                key = key + Hash.h(title, hashSize);
             }
         }
         return found;
     }
-    
+
+
     private void rehash() {
         hashSize = hashSize * 2;
         HashTable updatedHashTable = new HashTable(hashSize);
 
         for (int i = 0; i < hashTable.length; i++) {
-            if ((hashTable[i] != null) && (hashTable[i].getId() != -1)) {
-                int tempId = hashTable[i].getId();
-                updatedHashTable.insert(tempId, hashTable[i]);
+            if ((hashTable[i] != null) && !(hashTable[i].getKey().equals("tombstone"))) {
+                //String tempId = hashTable[i].getKey();
+                updatedHashTable.insert(hashTable[i]);
             }
         }
         hashTable = updatedHashTable.getArr();

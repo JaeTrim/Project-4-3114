@@ -7,10 +7,12 @@ public class Record {
     // Temporarily String for value
 
     private String key;
+    private int index;
     private String value;
 
     public Record() {
         key = null;
+        index = -1;
         value = null;
     }
 
@@ -23,6 +25,16 @@ public class Record {
     public void setKey(String newKey) {
         key = newKey;
     }
+    
+    public int getIndex()
+    {
+        return index;
+    }
+    
+    public void setIndex(int i)
+    {
+        index = i;
+    }
 
 
     public String getValue() {
@@ -30,7 +42,7 @@ public class Record {
     }
 
 
-    public void setSong(String newValue) {
+    public void setValue(String newValue) {
         value = newValue;
     }
 }
