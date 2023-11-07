@@ -2,10 +2,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Command Processor Class that reads the input file
+ */
 public class CommandProcessor {
 
     private World world;
 
+    /**
+     * Command Processor Constructor
+     * 
+     * @param hashSize
+     *            is the inital hash size for the hashtable
+     * @param file
+     *            is the input file
+     * @throws FileNotFoundException
+     */
     public CommandProcessor(int hashSize, String file)
         throws FileNotFoundException {
         world = new World(hashSize, file);
@@ -13,6 +25,14 @@ public class CommandProcessor {
     }
 
 
+    /**
+     * readFile method that reads the input file and stores data and sends it to
+     * the world
+     * 
+     * @param name
+     *            is the name of the input file
+     * @throws FileNotFoundException
+     */
     private void readFile(String name) throws FileNotFoundException {
         File file = new File(name);
         Scanner scanner = new Scanner(file);

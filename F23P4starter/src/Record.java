@@ -4,8 +4,10 @@ public class Record {
     // the key is a string of the artist or song
     // the value is the corresponding node in the graph
 
+    // Temporarily String for value
+
     private String key;
-    private Node value;
+    private String value;
 
     public Record() {
         key = null;
@@ -23,12 +25,12 @@ public class Record {
     }
 
 
-    public Node getValue() {
+    public String getValue() {
         return value;
     }
 
 
-    public void setSong(Node newValue) {
+    public void setSong(String newValue) {
         value = newValue;
     }
 }

@@ -12,7 +12,7 @@ public class World {
 
 
     public void insert(String artistName, String songName) {
-
+        
     }
 
 
@@ -44,14 +44,13 @@ public class World {
         if (printType.equals("song")) {
             for (int i = 0; i < songTable.getSize(); i++) {
                 System.out.println(songTable.getArr()[i].getValue() + ": "
-                    + table.getArr()[i].getKey());
+                    + songTable.getArr()[i].getKey());
             }
         }
-        else if (printType.equals("artist)")) {
-
+        else if (printType.equals("artist")) {
         }
         else if (printType.equals("graph")) {
-
         }
+        System.out.println("total songs: ");
     }
 }
