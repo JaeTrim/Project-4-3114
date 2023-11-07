@@ -27,11 +27,10 @@ public class HashTable {
     }
 
 
-    public void insert(Record record) {
+    public void insert(String recordType, Record record) {
         if (recordCount >= (hashSize / 2)) {
             rehash();
-            System.out.println("Hash table expanded to " + hashSize
-                + " records");
+            System.out.println(recordType + " hash table size doubled");
         }
         int index = Hash.h(record.getKey(), hashSize);
         while ((hashTable[index] != null) && (hashTable[index]
@@ -67,14 +66,14 @@ public class HashTable {
 
     public int search(String title) {
         int found = -1;
-        int key = Hash.h(title, hashSize);
-        while (hashTable[key] != null) {
-            if (hashTable[key].getKey().equals(title)) {
-                found = key;
+        int index = Hash.h(title, hashSize);
+        while (hashTable[index] != null) {
+            if (hashTable[index].getKey().equals(title)) {
+                found = index;
                 return found;
             }
             else {
-                key = key + Hash.h(title, hashSize);
+                index = index + Hash.h(title, hashSize);
             }
         }
         return found;
@@ -86,9 +85,10 @@ public class HashTable {
         HashTable updatedHashTable = new HashTable(hashSize);
 
         for (int i = 0; i < hashTable.length; i++) {
-            if ((hashTable[i] != null) && !(hashTable[i].getKey().equals("tombstone"))) {
-                //String tempId = hashTable[i].getKey();
-                updatedHashTable.insert(hashTable[i]);
+            if ((hashTable[i] != null) && !(hashTable[i].getKey().equals(
+                "tombstone"))) {
+                // String tempId = hashTable[i].getKey();
+                updatedHashTable.insert("", hashTable[i]);
             }
         }
         hashTable = updatedHashTable.getArr();

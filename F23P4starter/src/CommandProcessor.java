@@ -55,7 +55,6 @@ public class CommandProcessor {
                     "<SEP>");
                 String insertType = tempScanner.next().trim();
                 String typeName = tempScanner.next().trim();
-                System.out.println(insertType);
                 world.insert(insertType, typeName);
                 tempScanner.close();
             }
