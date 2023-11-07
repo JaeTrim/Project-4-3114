@@ -43,13 +43,14 @@ public class World {
     public void print(String printType) {
         if (printType.equals("song")) {
             for (int i = 0; i < songTable.getSize(); i++) {
-                System.out.println(songTable.getArr()[i].getValue() + ": "
-                    + songTable.getArr()[i].getKey());
+                
             }
         }
         else if (printType.equals("artist")) {
+            
         }
         else if (printType.equals("graph")) {
+            
         }
         System.out.println("total songs: ");
     }
