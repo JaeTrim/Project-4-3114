@@ -9,6 +9,7 @@ public class HashTable {
         this.hashSize = hashSize;
         table = new Record[hashSize];
         recordCount = 0;
+        Hash hash = new Hash();
     }
 
 
@@ -76,7 +77,6 @@ public class HashTable {
             }
         }
         return found;
-
     }
     
     private void rehash() {
@@ -91,5 +91,4 @@ public class HashTable {
         }
         hashTable = updatedHashTable.getArr();
     }
-
 }
