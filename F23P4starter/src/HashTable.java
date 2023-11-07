@@ -33,9 +33,11 @@ public class HashTable {
             System.out.println(recordType + " hash table size doubled");
         }
         int index = Hash.h(record.getKey(), hashSize);
+        int step = 1;
         while ((hashTable[index] != null) && (hashTable[index]
             .getIndex() != -1)) {
-            index = Hash.h(record.getKey(), hashSize);
+            index = index + (step * step);
+            step++;
         }
         record.setIndex(index);
         // record.setKey(key);
@@ -67,13 +69,15 @@ public class HashTable {
     public int search(String title) {
         int found = -1;
         int index = Hash.h(title, hashSize);
+        int step = 1;
         while (hashTable[index] != null) {
             if (hashTable[index].getKey().equals(title)) {
                 found = index;
                 return found;
             }
             else {
-                index = index + Hash.h(title, hashSize);
+               index = index + (step * step);
+               step++;
             }
         }
         return found;
