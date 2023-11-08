@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 /**
  * Command Processor Class that reads the input file
+ * @author Jae Trimboli (jaetrim)
+ * @author Mohammad Mian (mohammadm21)
+ * @version 11-07-2023
  */
 public class CommandProcessor {
 

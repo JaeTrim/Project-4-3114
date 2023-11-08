@@ -1,17 +1,39 @@
 
+/**
+ * World Class that deals with changing HashTable, graph, and reading from
+ * Command Prcoessor
+ * @author Jae Trimboli (jaetrim)
+ * @author Mohammad Mian (mohammadm21)
+ * @version 11-07-2023
+ */
 public class World {
 
     private HashTable songTable;
     private HashTable artistTable;
-    private Graph graph;
     private Record record;
 
+    /**
+     * World Constructor
+     * 
+     * @param hashSize
+     *            is initial hash size
+     * @param file
+     *            is the input file
+     */
     public World(int hashSize, String file) {
         songTable = new HashTable(hashSize);
         artistTable = new HashTable(hashSize);
     }
 
 
+    /**
+     * Inserts an artist name and a song name into the hashtable and graph
+     * 
+     * @param artistName
+     *            is the name of the artist
+     * @param songName
+     *            is the name of the song
+     */
     public void insert(String artistName, String songName) {
         if (artistTable.search(artistName) == -1) {
             // add node for that artist name to graph
@@ -19,88 +41,83 @@ public class World {
             record.setKey(artistName);
             artistTable.insert("Artist", record);
             System.out.println("|" + artistName + "|"
-                + " is added to the Artist database");
+                + " is added to the Artist database.");
         }
-        else if (songTable.search(songName) == -1) {
+        if (songTable.search(songName) == -1) {
             // add node for that artist name to graph
             record = new Record();
             record.setKey(songName);
-            artistTable.insert("Song", record);
+            songTable.insert("Song", record);
             System.out.println("|" + songName + "|"
-                + " is added to the Song database");
+                + " is added to the Song database.");
         }
-        else if (artistTable.search(artistName) != -1) {
-            System.out.println("|" + artistName + "|"
-                + " duplicates a record already in the database.");
-        }
-        else if (songTable.search(songName) != -1) {
-            System.out.println("|" + songName + "|"
-                + " duplicates a record already in the database.");
+        else {
+            // only graph knows if duplicate record
         }
 
     }
 
 
+    /**
+     * Removes a song or an artist from its respective hashTable
+     * 
+     * @param removeType
+     *            is whether it is a song or artist
+     * @param typeName
+     *            is the name of the song or artist
+     */
     public void remove(String removeType, String typeName) {
         if (removeType.equals("song")) {
-            if (songTable.search(typeName) != -1) {
-                songTable.delete(typeName);
-                System.out.println("|" + typeName + "|"
-                    + " is removed from the Song database.");
-            }
-            else {
-                System.out.println("|" + typeName + "|"
-                    + " does not exist in the Song database.");
-            }
+            songTable.delete("Song", typeName);
         }
         else if (removeType.equals("artist")) {
-            if (artistTable.search(typeName) != -1) {
-                artistTable.delete(typeName);
-                System.out.println("|" + typeName + "|"
-                    + " is removed from the Artist database.");
-            }
-            else {
-                System.out.println("|" + typeName + "|"
-                    + " does not exist in the Artist database.");
-            }
+            artistTable.delete("Artist", typeName);
         }
     }
 
 
+    /**
+     * Prints out the songs or artists and the total songs or artists
+     * 
+     * @param printType
+     *            is whether it is a song or artist
+     */
     public void print(String printType) {
 
         if (printType.equals("song")) {
-            System.out.println("total songs: " + songTable.getRecordCount());
+
             for (int i = 0; i < songTable.getSize(); i++) {
 
                 if (songTable.getArr()[i] != null) {
-                    if (songTable.getArr()[i].getKey() == "TOMBSTONE") {
+                    if (songTable.getArr()[i].getKey().equals("TOMBSTONE")) {
                         System.out.println(songTable.getArr()[i].getIndex()
                             + ": TOMBSTONE");
                     }
                     else {
                         System.out.println(songTable.getArr()[i].getIndex()
-                            + ": " + songTable.getArr()[i].getKey());
+                            + ": |" + songTable.getArr()[i].getKey() + "|");
 
                     }
                 }
             }
+            System.out.println("total songs: " + songTable.getRecordCount());
         }
         else if (printType.equals("artist")) {
-            System.out.println("total artists: " + artistTable
-                .getRecordCount());
+
             for (int i = 0; i < artistTable.getSize(); i++) {
                 if (artistTable.getArr()[i] != null) {
-                    if (artistTable.getArr()[i].getKey() == "TOMBSTONE") {
+                    if (artistTable.getArr()[i].getKey().equals("TOMBSTONE")) {
                         System.out.println(artistTable.getArr()[i].getIndex()
                             + ": TOMBSTONE");
                     }
                     else {
                         System.out.println(artistTable.getArr()[i].getIndex()
-                            + ": " + artistTable.getArr()[i].getKey());
+                            + ": |" + artistTable.getArr()[i].getKey() + "|");
                     }
                 }
             }
+            System.out.println("total artists: " + artistTable
+                .getRecordCount());
         }
         else if (printType.equals("graph")) {
 
