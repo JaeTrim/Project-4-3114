@@ -66,7 +66,7 @@ public class HashTable {
     public void insert(String recordType, Record record) {
         if (recordCount >= (hashSize / 2)) {
             rehash();
-            System.out.println(recordType + " hash table size doubled");
+            System.out.println(recordType + " hash table size doubled.");
         }
         int index = Hash.h(record.getKey(), hashSize);
         int step = 1;
