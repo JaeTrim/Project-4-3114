@@ -105,5 +105,10 @@ public class Graph {
         }
         return temp;
       }
+      
+      public void addNode()
+      {
+          
+      }
 
 }

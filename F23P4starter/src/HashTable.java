@@ -70,9 +70,8 @@ public class HashTable {
         }
         int index = Hash.h(record.getKey(), hashSize);
         int step = 1;
-        while ((hashTable[index] != null) && (hashTable[index]
-            .getIndex() != -1)) {
-            index = index + (step * step);
+        while ((hashTable[index] != null) && !(hashTable[index].getKey().equals("TOMBSTONE"))) {
+            index = (index + (step * step)) % hashSize;
             step++;
         }
         record.setIndex(index);
@@ -127,7 +126,7 @@ public class HashTable {
                 return found;
             }
             else {
-                index = index + (step * step);
+                index = (index + (step * step)) % hashSize;
                 step++;
             }
         }

@@ -21,7 +21,7 @@ public class CommandProcessorTest extends TestCase {
                 + "|Ma Rainey| is added to the Artist database.\r\n"
                 + "|Ma Rainey's Black Bottom| is added to the Song database.\r\n"
                 + "|Mississippi Boweavil Blues| is added to the Song database.\r\n"
-                + "Song hash table size doubled\r\n"
+                + "Song hash table size doubled.\r\n"
                 + "|Fixin' To Die Blues| is added to the Song database.\r\n"
                 + "0: |Blind Lemon Jefferson|\r\n" + "7: |Ma Rainey|\r\n"
                 + "total artists: 2\r\n" + "1: |Fixin' To Die Blues|\r\n"
