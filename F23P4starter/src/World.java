@@ -52,6 +52,11 @@ public class World {
             System.out.println("|" + songName + "|"
                 + " is added to the Song database.");
         }
+        if (songTable.search(songName) != -1 && artistTable.search(artistName) != -1)
+        {
+//            System.out.println("|" + songName + "|"
+//                + " is added to the Song database.");
+        }
         else {
             // only graph knows if duplicate record
         }

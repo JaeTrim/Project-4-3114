@@ -44,11 +44,13 @@ public class CommandProcessor {
             if (currentLine.contains("remove")) {
                 String[] removeLine = currentLine.split("\\s+");
                 String removeType = removeLine[1];
-                String typeName = "";
-                for (int i = 2; i < removeLine.length; i++) {
-                    typeName += removeLine[i] + " ";
+                String typeName = null;
+                if (removeType.equals("song")) {
+                    typeName = currentLine.substring(12, currentLine.length());
                 }
-                typeName = typeName.trim();
+                else if (removeType.equals("artist")) {
+                    typeName = currentLine.substring(14, currentLine.length());
+                }
 
                 world.remove(removeType, typeName);
             }

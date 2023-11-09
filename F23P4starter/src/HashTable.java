@@ -69,9 +69,10 @@ public class HashTable {
             System.out.println(recordType + " hash table size doubled.");
         }
         int index = Hash.h(record.getKey(), hashSize);
+        int home = index;
         int step = 1;
         while ((hashTable[index] != null) && !(hashTable[index].getKey().equals("TOMBSTONE"))) {
-            index = (index + (step * step)) % hashSize;
+            index = (home + (step * step)) % hashSize;
             step++;
         }
         record.setIndex(index);
@@ -119,6 +120,7 @@ public class HashTable {
     public int search(String title) {
         int found = -1;
         int index = Hash.h(title, hashSize);
+        int home = index;
         int step = 1;
         while (hashTable[index] != null) {
             if (hashTable[index].getKey().equals(title)) {
@@ -126,7 +128,7 @@ public class HashTable {
                 return found;
             }
             else {
-                index = (index + (step * step)) % hashSize;
+                index = (home + (step * step)) % hashSize;
                 step++;
             }
         }
