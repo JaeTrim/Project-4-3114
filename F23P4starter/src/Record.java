@@ -2,6 +2,7 @@
 /**
  * Record class is a record that holds a key for the name of song or artist, an
  * index of its position, as well as a value for the Node in the graph
+ * 
  * @author Jae Trimboli (jaetrim)
  * @author Mohammad Mian (mohammadm21)
  * @version 11-07-2023
@@ -15,7 +16,7 @@ public class Record {
 
     private String key;
     private int index;
-    private String value;
+    private Node value;
 
     /**
      * Record constructor
@@ -74,7 +75,7 @@ public class Record {
      * 
      * @return the value
      */
-    public String getValue() {
+    public Node getValue() {
         return value;
     }
 
@@ -85,7 +86,7 @@ public class Record {
      * @param newValue
      *            is new value
      */
-    public void setValue(String newValue) {
+    public void setValue(Node newValue) {
         value = newValue;
     }
 }

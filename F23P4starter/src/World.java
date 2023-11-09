@@ -12,6 +12,7 @@ public class World {
     private HashTable songTable;
     private HashTable artistTable;
     private Record record;
+    private Graph graph;
 
     /**
      * World Constructor
@@ -24,6 +25,7 @@ public class World {
     public World(int hashSize, String file) {
         songTable = new HashTable(hashSize);
         artistTable = new HashTable(hashSize);
+        graph = new Graph(hashSize);
     }
 
 
@@ -36,31 +38,67 @@ public class World {
      *            is the name of the song
      */
     public void insert(String artistName, String songName) {
+
+// if (artistTable.search(artistName) != -1 && songTable.search(songName) != -1)
+// {
+// int artistIndex = artistTable.search(artistName);
+// int songIndex = songTable.search(songName);
+// Node artistNode = artistTable.getArr()[artistIndex].getValue();
+// Node songNode = songTable.getArr()[songIndex].getValue();
+//
+//
+// }
+
         if (artistTable.search(artistName) == -1) {
             // add node for that artist name to graph
-            record = new Record();
-            record.setKey(artistName);
-            artistTable.insert("Artist", record);
-            System.out.println("|" + artistName + "|"
-                + " is added to the Artist database.");
+            helpInsert(artistName, "artist");
         }
         if (songTable.search(songName) == -1) {
             // add node for that artist name to graph
-            record = new Record();
-            record.setKey(songName);
-            songTable.insert("Song", record);
-            System.out.println("|" + songName + "|"
-                + " is added to the Song database.");
-        }
-        if (songTable.search(songName) != -1 && artistTable.search(artistName) != -1)
-        {
-//            System.out.println("|" + songName + "|"
-//                + " is added to the Song database.");
-        }
-        else {
-            // only graph knows if duplicate record
+            helpInsert(songName, "song");
         }
 
+        int artistIndex = artistTable.search(artistName);
+        int songIndex = songTable.search(songName);
+        Node artistNode = artistTable.getArr()[artistIndex].getValue();
+        Node songNode = songTable.getArr()[songIndex].getValue();
+
+        if (!graph.hasEdge(artistNode.getIndex(), songNode.getIndex())) {
+            graph.addEdge(artistNode.getIndex(), songNode.getIndex());
+        }
+        if (!graph.hasEdge(songNode.getIndex(), artistNode.getIndex())) {
+            graph.addEdge(songNode.getIndex(), artistNode.getIndex());
+        }
+
+        else {
+            System.out.println("|" + artistName + "<SEP>" + songName
+                + "| duplicates a record in the databse.");
+
+        }
+
+    }
+
+
+    private void helpInsert(String name, String type) {
+        record = new Record();
+        record.setKey(name);
+
+        Node node = new Node();
+        node.setIndex(graph.getNumOfNodes());
+        graph.addNode(node);
+        record.setValue(node);
+
+        if (type.equals("song")) {
+            songTable.insert("Song", record);
+            System.out.println("|" + name + "|"
+                + " is added to the Song database.");
+        }
+
+        else if (type.equals("artist")) {
+            artistTable.insert("Artist", record);
+            System.out.println("|" + name + "|"
+                + " is added to the Artist database.");
+        }
     }
 
 

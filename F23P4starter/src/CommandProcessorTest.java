@@ -16,6 +16,7 @@ public class CommandProcessorTest extends TestCase {
                 + "total songs: 0\r\n" + "total artists: 0\r\n"
                 + "|Blind Lemon Jefferson| is added to the Artist database.\r\n"
                 + "|Long Lonesome Blues| is added to the Song database.\r\n"
+                + "|Blind Lemon Jefferson<SEP>Long Lonesome Blues| duplicates a record in the databse.\r\n"
                 + "|Long   Lonesome Blues| is added to the Song database.\r\n"
                 + "|long Lonesome Blues| is added to the Song database.\r\n"
                 + "|Ma Rainey| is added to the Artist database.\r\n"

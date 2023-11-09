@@ -21,7 +21,8 @@ public class RecordTest extends TestCase {
     }
     
     public void testValue() {
-        record.setValue("10");
-        assertEquals(record.getValue(), "10");
+        Node temp = new Node();
+        record.setValue(temp);
+        assertEquals(record.getValue(), temp);
     }
 }
