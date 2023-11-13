@@ -10,9 +10,11 @@ public class Graph {
     private DLList<Node>[] list;
     private int numOfNodes;
     private int[] nodeArray;
+    private int size;
 
     @SuppressWarnings("unchecked")
     public Graph(int hashSize) {
+        size = hashSize;
         list = new DLList[hashSize];
         numOfNodes = 0;
         nodeArray = new int[hashSize];
@@ -29,6 +31,12 @@ public class Graph {
 
 
     public void addNode(Node node) {
+        if (numOfNodes == list.length) {
+            size = size * 2;
+            @SuppressWarnings("unchecked")
+            DLList<Node>[] temp = new DLList[size];
+            System.arraycopy(list, 0, temp, 0, numOfNodes);
+        }
         DLList<Node> temp = new DLList<Node>();
         temp.add(node);
         list[numOfNodes] = temp;
