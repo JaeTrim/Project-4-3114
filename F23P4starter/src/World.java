@@ -38,23 +38,10 @@ public class World {
      *            is the name of the song
      */
     public void insert(String artistName, String songName) {
-
-// if (artistTable.search(artistName) != -1 && songTable.search(songName) != -1)
-// {
-// int artistIndex = artistTable.search(artistName);
-// int songIndex = songTable.search(songName);
-// Node artistNode = artistTable.getArr()[artistIndex].getValue();
-// Node songNode = songTable.getArr()[songIndex].getValue();
-//
-//
-// }
-
         if (artistTable.search(artistName) == -1) {
-            // add node for that artist name to graph
             helpInsert(artistName, "artist");
         }
         if (songTable.search(songName) == -1) {
-            // add node for that artist name to graph
             helpInsert(songName, "song");
         }
 
@@ -69,10 +56,9 @@ public class World {
         if (!graph.hasEdge(songNode.getIndex(), artistNode.getIndex())) {
             graph.addEdge(songNode.getIndex(), artistNode.getIndex());
         }
-
         else {
             System.out.println("|" + artistName + "<SEP>" + songName
-                + "| duplicates a record in the databse.");
+                + "| duplicates a record already in the database.");
 
         }
 
@@ -168,4 +154,5 @@ public class World {
         }
 
     }
+
 }

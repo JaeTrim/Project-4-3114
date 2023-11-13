@@ -9,14 +9,20 @@ public class Graph {
 
     private DLList<Node>[] list;
     private int numOfNodes;
+    private int[] nodeArray;
 
     @SuppressWarnings("unchecked")
     public Graph(int hashSize) {
         list = new DLList[hashSize];
         numOfNodes = 0;
+        nodeArray = new int[hashSize];
+        for (int i = 0; i < hashSize; i++) {
+            nodeArray[i] = -1;
+        }
 
     }
-    
+
+
     public int getNumOfNodes() {
         return numOfNodes;
     }
@@ -60,18 +66,25 @@ public class Graph {
     }
 
 
-    public void expand() {
-
-    }
-
-
     public void print() {
 
     }
 
 
-    public void union() {
+    public void union(int i, int j) {
+        int firstRoot = find(i);
+        int secondRoot = find(j);
+        if (firstRoot != secondRoot) {
+            nodeArray[firstRoot] = secondRoot;
+        }
+    }
 
+
+    private int find(int curr) {
+        while (nodeArray[curr] != -1) {
+            curr = nodeArray[curr];
+        }
+        return curr;
     }
 
 
@@ -80,7 +93,41 @@ public class Graph {
     }
 
 
-    public void diameter() {
+    public int diameter(int largestComponentNodes) {
+        int[][] D = new int[largestComponentNodes][largestComponentNodes];
+        for (int i = 0; i < largestComponentNodes; i++) {
+            for (int j = 0; j < largestComponentNodes; j++) {
+                if (i == j) {
+                    D[i][j] = 0;
+                }
+                else if (hasEdge(i, j)) {
+                    D[i][j] = 1;
+                }
+                else {
+                    D[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        for (int k = 0; k < largestComponentNodes; k++) {
+            for (int i = 0; i < largestComponentNodes; i++) {
+                for (int j = 0; j < largestComponentNodes; j++) {
+                    if (D[i][k] != Integer.MAX_VALUE
+                        && D[k][j] != Integer.MAX_VALUE && D[i][j] > (D[i][k]
+                            + D[k][j])) {
+                        D[i][j] = D[i][k] + D[k][j];
+                    }
+                }
+            }
+        }
+        int diameter = 0;
+        for (int i = 0; i < largestComponentNodes; i++) {
+            for (int j = 0; j < largestComponentNodes; j++) {
+                if (D[i][j] != Integer.MAX_VALUE && D[i][j] > diameter) {
+                    diameter = D[i][j];
+                }
+            }
+        }
 
+        return diameter;
     }
 }
