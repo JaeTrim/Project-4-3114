@@ -14,9 +14,12 @@ public class CommandProcessorTest extends TestCase {
         String output =
             "|When Summer's Through| does not exist in the Song database.\r\n"
                 + "total songs: 0\r\n" + "total artists: 0\r\n"
+                + "There are 0 connected components\r\n"
+                + "The largest connected component has 0 elements\r\n"
+                + "The diameter of the largest component is 0\r\n"
                 + "|Blind Lemon Jefferson| is added to the Artist database.\r\n"
                 + "|Long Lonesome Blues| is added to the Song database.\r\n"
-                + "|Blind Lemon Jefferson<SEP>Long Lonesome Blues| duplicates a record in the databse.\r\n"
+                + "|Blind Lemon Jefferson<SEP>Long Lonesome Blues| duplicates a record already in the database.\r\n"
                 + "|Long   Lonesome Blues| is added to the Song database.\r\n"
                 + "|long Lonesome Blues| is added to the Song database.\r\n"
                 + "|Ma Rainey| is added to the Artist database.\r\n"
@@ -31,11 +34,14 @@ public class CommandProcessorTest extends TestCase {
                 + "15: |Long Lonesome Blues|\r\n"
                 + "16: |Ma Rainey's Black Bottom|\r\n"
                 + "19: |Long   Lonesome Blues|\r\n" + "total songs: 6\r\n"
+                + "There are 1 connected components\r\n"
+                + "The largest connected component has 8 elements\r\n"
+                + "The diameter of the largest component is 4\r\n"
                 + "|Sleepy| does not exist in the Song database.\r\n"
                 + "|ma rainey| does not exist in the Artist database.\r\n"
                 + "|Ma Rainey| is removed from the Artist database.\r\n"
                 + "0: |Blind Lemon Jefferson|\r\n" + "7: TOMBSTONE\r\n"
-                + "total artists: 1\r\n" + "";
+                + "total artists: 1";
         assertFuzzyEquals(systemOut().getHistory(), output);
     }
 }
