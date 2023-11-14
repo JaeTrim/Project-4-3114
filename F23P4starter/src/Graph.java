@@ -9,7 +9,8 @@ public class Graph {
 
     private DLList<Node>[] list;
     private int numOfNodes;
-    private int[] nodeArray;
+    private int[] parent;
+    private int[] count;
     private int size;
 
     @SuppressWarnings("unchecked")
@@ -17,11 +18,6 @@ public class Graph {
         size = hashSize;
         list = new DLList[hashSize];
         numOfNodes = 0;
-        nodeArray = new int[hashSize];
-        for (int i = 0; i < hashSize; i++) {
-            nodeArray[i] = -1;
-        }
-
     }
 
 
@@ -75,29 +71,87 @@ public class Graph {
 
 
     public void print() {
-
+        parent = new int[size];
+        for (int n = 0; n < size; n++) {
+            parent[n] = -1;
+        }
+        
+        count = new int[size];
+        for (int n = 0; n < list.length; n++)
+        {
+            if (list[n] != null)
+            {
+                count[n] = list[n].size();
+            }
+        }
+        
+        ConnectedComponent com = this.ConnectedComponent();
+        System.out.println("There are " + com.getConnectedComponents() + " connected components");
+        System.out.println("The largest connected component has " + com.getElements() + " elements");
+        
     }
 
 
     public void union(int i, int j) {
+        
         int firstRoot = find(i);
         int secondRoot = find(j);
         if (firstRoot != secondRoot) {
-            nodeArray[firstRoot] = secondRoot;
+            parent[secondRoot] = firstRoot;
         }
     }
 
 
     private int find(int curr) {
-        while (nodeArray[curr] != -1) {
-            curr = nodeArray[curr];
+        while (parent[curr] != -1) {
+            curr = parent[curr];
         }
         return curr;
     }
 
 
-    public void connectedComponent() {
-
+    public ConnectedComponent ConnectedComponent() {
+        ConnectedComponent com = new ConnectedComponent();
+        for (int i = 0; i < list.length; i++)
+        {
+            if (list[i] != null)
+            {
+                for (int j = 0; j < list[i].size() - 1; j++)
+                {
+                    this.union(list[i].get(j).getIndex(), list[i].get(j + 1).getIndex());
+                }
+            }
+        }
+        
+        int greatestCount = 0;
+        int numOfComponents = 0;
+        int greatestIndex = 0;
+        int currentCount = 0;
+        for (int i = 0; i < numOfNodes; i++)
+        {   
+            currentCount = 0;
+            for (int j = 0; j < numOfNodes; j++)
+            {
+                if (parent[j] == i)
+                {
+                    currentCount++;
+                }
+            }   
+            if (currentCount > greatestCount)
+            {
+                currentCount++;
+                greatestIndex = i;
+                greatestCount = currentCount;
+            }
+            if (currentCount > 0)
+            {
+                numOfComponents++;
+            }
+        }
+        
+        com.setConnectedComponents(numOfComponents);
+        com.setElements(greatestCount);
+        return com;
     }
 
 

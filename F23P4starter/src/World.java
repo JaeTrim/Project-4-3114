@@ -150,7 +150,7 @@ public class World {
                 .getRecordCount());
         }
         else if (printType.equals("graph")) {
-
+            graph.print();
         }
 
     }
