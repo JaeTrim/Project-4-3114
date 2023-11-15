@@ -93,7 +93,7 @@ public class HashTable {
      */
     public void delete(String removeType, String title) {
         int found = this.search(title);
-        if (found != -1) {
+        
             Record temp = new Record();
             temp.setKey("TOMBSTONE");
             temp.setIndex(found);
@@ -101,11 +101,6 @@ public class HashTable {
             System.out.println("|" + title + "|" + " is removed from the "
                 + removeType + " database.");
             recordCount--;
-        }
-        else {
-            System.out.println("|" + title + "|" + " does not exist in the "
-                + removeType + " database.");
-        }
 
     }
 

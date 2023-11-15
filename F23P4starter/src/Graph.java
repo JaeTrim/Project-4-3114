@@ -27,16 +27,35 @@ public class Graph {
 
 
     public void addNode(Node node) {
-        if (numOfNodes == list.length) {
-            size = size * 2;
-            @SuppressWarnings("unchecked")
-            DLList<Node>[] temp = new DLList[size];
-            System.arraycopy(list, 0, temp, 0, numOfNodes);
+        if (numOfNodes >= (size - 1)) {
+            expand();
         }
+        
         DLList<Node> temp = new DLList<Node>();
         temp.add(node);
-        list[numOfNodes] = temp;
+        
+        int firstEmpty = 0;
+        for (int i = 0; i < list.length; i++)
+        {
+            if (list[i] == null)
+            {
+                firstEmpty = i;
+                break;
+            }
+        }
+        
+        list[firstEmpty] = temp;
+        node.setIndex(firstEmpty);
         numOfNodes++;
+    }
+    
+    private void expand()
+    {
+        size = size * 2;
+        @SuppressWarnings("unchecked")
+        DLList<Node>[] temp = new DLList[size];
+        System.arraycopy(list, 0, temp, 0, numOfNodes);
+        list = temp;
     }
 
 
@@ -49,11 +68,18 @@ public class Graph {
 
     public boolean hasEdge(int start, int end) {
         DLList<Node> temp = list[start];
+        if (list[end] == null)
+        {
+            return false;
+        }
         Node destNode = list[end].get(0);
-        for (int i = 0; i < temp.size(); i++) {
-            Node node = temp.get(i);
-            if (node == destNode) {
-                return true;
+        if (temp != null)
+        {
+            for (int i = 0; i < temp.size(); i++) {
+                Node node = temp.get(i);
+                if (node == destNode) {
+                    return true;
+                }
             }
         }
         return false;
@@ -66,6 +92,7 @@ public class Graph {
             for (int i = 1; i < tempList.size(); i++) {
                 list[tempList.get(i).getIndex()].remove(node);
             }
+            list[node.getIndex()] = null;
         }
     }
 
@@ -73,7 +100,14 @@ public class Graph {
     public void print() {
         parent = new int[size];
         for (int n = 0; n < size; n++) {
-            parent[n] = -1;
+//            if (list[n] != null)
+//            {
+                parent[n] = -1;
+//            }
+//            else 
+//            {
+//                parent[n] = -2; 
+//            }
         }
 
         count = new int[size];
@@ -90,7 +124,6 @@ public class Graph {
             .getElements() + " elements");
         System.out.println("The diameter of the largest component is " + this
             .diameter(com.getElements()));
-
     }
 
 
@@ -127,9 +160,9 @@ public class Graph {
         int numOfComponents = 0;
         int greatestIndex = 0;
         int currentCount = 0;
-        for (int i = 0; i < numOfNodes; i++) {
+        for (int i = 0; i < size; i++) {
             currentCount = 0;
-            for (int j = 0; j < numOfNodes; j++) {
+            for (int j = 0; j < size; j++) {
                 if (parent[j] == i) {
                     currentCount++;
                 }

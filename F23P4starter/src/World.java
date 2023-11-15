@@ -70,7 +70,6 @@ public class World {
         record.setKey(name);
 
         Node node = new Node();
-        node.setIndex(graph.getNumOfNodes());
         graph.addNode(node);
         record.setValue(node);
 
@@ -98,10 +97,26 @@ public class World {
      */
     public void remove(String removeType, String typeName) {
         if (removeType.equals("song")) {
-            songTable.delete("Song", typeName);
+            if (songTable.search(typeName) == -1) {
+                System.out.println("|" + typeName + "|"
+                    + " does not exist in the Song database.");
+            }
+            else {
+                graph.removeNode(songTable.getArr()[songTable.search(typeName)]
+                    .getValue());
+                songTable.delete("Song", typeName);
+            }
         }
         else if (removeType.equals("artist")) {
-            artistTable.delete("Artist", typeName);
+            if (artistTable.search(typeName) == -1) {
+                System.out.println("|" + typeName + "|"
+                    + " does not exist in the Artist database.");
+            }
+            else {
+                graph.removeNode(artistTable.getArr()[artistTable.search(
+                    typeName)].getValue());
+                artistTable.delete("Artist", typeName);
+            }
         }
     }
 
