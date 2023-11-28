@@ -76,7 +76,6 @@ public class HashTable {
             step++;
         }
         record.setIndex(index);
-        // record.setKey(key);
         hashTable[record.getIndex()] = record;
         recordCount++;
 

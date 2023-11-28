@@ -4,7 +4,7 @@ import student.TestCase;
  * This class tests the constructor
  * and various methods of the DLList Class.
  * 
- * @author Mohammad Mian, Jae Trimboli, Rahul Menon
+ * @author Mohammad Mian, Jae Trimboli
  * @version 11-2-15
  *
  */

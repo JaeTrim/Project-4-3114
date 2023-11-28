@@ -1,19 +1,52 @@
-remove song When Summer's Through
-print song
-print artist
+insert Drake<SEP>Fair Trade
+insert Drake<SEP>Hours
+insert Drake<SEP>One Dance
+insert Trav<SEP>Mafia
+insert Trav<SEP>Fair Trade
+insert Trav<SEP>IKNOW?
+insert Trav<SEP>God Country
+insert Kanye<SEP>Moon
+insert Kanye<SEP>God Country
+insert Drake<SEP>Feel No Ways
+insert Keem<SEP>16
+insert Kendrick<SEP>Range Brothers
+insert Kendrick<SEP>Father Time 
+insert Keem<SEP>Range Brothers
+insert Keem<SEP>Feel No Ways
+insert Future<SEP>Hard to Choose One
+insert Future<SEP>Telekenesis
+insert SZA<SEP>Broken Clocks
+insert Trav<SEP>Telekenesis
+insert KenCarson<SEP>ineedu
+insert KenCarson<SEP>Mafia
+insert SZA<SEP>Telekenesis
+insert Uzi<SEP>Hours
+remove song Telekenesis
+insert SZA<SEP>God Country
+insert Future<SEP>Lifes Good
+insert Drake<SEP>Lifes Good
+insert Uzi<SEP>20 Min
+insert Taylor<SEP>Flowers
+insert Adele<SEP>Skyfall
+insert Adele<SEP>20 Min
+insert Taylor<SEP>Skyfall
+insert KEYGLOCK<SEP>Flowers
+remove song 20 Min
+insert KEYGLOCK<SEP>GLOCKOMA
+insert Trav<SEP>GLOCKOMA
+remove song Mafia
+insert Metro<SEP>Beats
+insert Kenny<SEP>Beats 2
+insert Pierre<SEP>Beats 3
+insert Metro<SEP>Beats 3
+insert Kenny<SEP>Beats
+insert Metro<SEP>IKNOW?
+insert KenCarson<SEP>Beats 2
+remove artist Drake
+insert Uzi<SEP>fly
+insert KenCarson<SEP>fly
+insert Trav<SEP>One Dance
+insert Kendrick<SEP>Hard to Choose One
+insert Kendrick<SEP>Broken Clocks
 print graph
-insert Blind Lemon Jefferson<SEP>Long Lonesome Blues
-insert Blind Lemon Jefferson<SEP>Long Lonesome Blues
-insert Blind Lemon Jefferson<SEP>Long   Lonesome Blues
-insert Blind Lemon Jefferson<SEP>long Lonesome Blues
-insert Ma Rainey<SEP>Ma Rainey's Black Bottom
-insert Ma Rainey<SEP>Long Lonesome Blues
-insert Ma Rainey<SEP>Mississippi Boweavil Blues
-insert Ma Rainey<SEP>Fixin' To Die Blues
-print artist
-print song
-print graph
-remove song Sleepy
-remove artist ma rainey
-remove artist Ma Rainey
-print artist
+
