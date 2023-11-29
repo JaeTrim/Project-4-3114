@@ -31,18 +31,18 @@ public class Graph {
             expand();
         }
 
-        int firstEmpty = 0;
-        for (int i = 0; i < list.length; i++) {
-            if (list[i] == null) {
-                firstEmpty = i;
-                break;
-            }
-        }
+//        int firstEmpty = 0;
+//        for (int i = 0; i < list.length; i++) {
+//            if (list[i] == null) {
+//                firstEmpty = i;
+//                break;
+//            }
+//        }
 
         DLList<Node> temp = new DLList<Node>();
-        node.setIndex(firstEmpty);
+        node.setIndex(numOfNodes);
         temp.add(node);
-        list[firstEmpty] = temp;
+        list[numOfNodes] = temp;
         numOfNodes++;
     }
 
@@ -82,13 +82,20 @@ public class Graph {
 
 
     public void removeNode(Node node) {
-        DLList<Node> tempList = list[node.getIndex()];
+        int index = node.getIndex();
+        DLList<Node> tempList = list[index];
         if (tempList.size() != 0) {
             for (int i = 1; i < tempList.size(); i++) {
                 list[tempList.get(i).getIndex()].remove(node);
             }
-            list[node.getIndex()] = null;
+            list[index] = null;
             numOfNodes--;
+            for (int i = index; i < list.length - 1; i++) {
+                list[i] = list[i + 1];
+                if (list[i] != null) {
+                    list[i].get(0).setIndex(i);
+                }
+            }
         }
     }
 
@@ -104,14 +111,11 @@ public class Graph {
             }
         }
         count = new int[size];
-        for (int i = 0; i < size; i++)
-        {
-            if (list[i] != null)
-            {
-                count[i] = list.length;
+        for (int i = 0; i < size; i++) {
+            if (list[i] != null) {
+                count[i] = list[i].size();
             }
-            else
-            {
+            else {
                 count[i] = -1;
             }
         }
@@ -120,10 +124,10 @@ public class Graph {
 
         System.out.println("There are " + com.getConnectedComponents()
             + " connected components");
-        System.out.println("The largest connected component has " + com.getElements()
-            + " elements");
+        System.out.println("The largest connected component has " + com
+            .getElements() + " elements");
         System.out.println("The diameter of the largest component is " + this
-            .diameter());
+            .diameter(com.getElements()));
     }
 
 
@@ -131,26 +135,20 @@ public class Graph {
         int firstRoot = find(i);
         int secondRoot = find(j);
         if (firstRoot != secondRoot) {
-            if (count[secondRoot] > count[firstRoot])
-            {
+            if (count[secondRoot] > count[firstRoot]) {
                 parent[firstRoot] = secondRoot;
                 count[secondRoot] += firstRoot;
-                for (int n = 0; n < parent.length; n++)
-                {
-                    if (parent[n] == firstRoot)
-                    {
+                for (int n = 0; n < parent.length; n++) {
+                    if (parent[n] == firstRoot) {
                         parent[n] = secondRoot;
                     }
                 }
             }
-            else
-            {
+            else {
                 parent[secondRoot] = firstRoot;
                 count[firstRoot] += secondRoot;
-                for (int n = 0; n < parent.length; n++)
-                {
-                    if (parent[n] == secondRoot)
-                    {
+                for (int n = 0; n < parent.length; n++) {
+                    if (parent[n] == secondRoot) {
                         parent[n] = firstRoot;
                     }
                 }
@@ -207,12 +205,11 @@ public class Graph {
     }
 
 
-    public int diameter() {
-        int[][] D = new int[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (i == j)
-                {
+    public int diameter(int elements) {
+        int[][] D = new int[elements][elements];
+        for (int i = 0; i < elements; i++) {
+            for (int j = 0; j < elements; j++) {
+                if (i == j) {
                     D[i][j] = 0;
                 }
                 else if (hasEdge(i, j)) {
@@ -223,12 +220,12 @@ public class Graph {
                 }
             }
         }
-        for (int k = 0; k < size; k++) {
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
+        for (int k = 0; k < elements; k++) {
+            for (int i = 0; i < elements; i++) {
+                for (int j = 0; j < elements; j++) {
                     if (D[i][k] != Integer.MAX_VALUE
-                        && D[k][j] != Integer.MAX_VALUE && D[i][j] > (D[i][k]
-                            + D[k][j])) {
+                        && D[k][j] != Integer.MAX_VALUE && (D[i][j] > (D[i][k]
+                            + D[k][j]))) {
                         D[i][j] = D[i][k] + D[k][j];
                     }
                 }
@@ -236,8 +233,8 @@ public class Graph {
         }
 
         int diameter = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < elements; i++) {
+            for (int j = 0; j < elements; j++) {
                 if (D[i][j] != Integer.MAX_VALUE && D[i][j] > diameter) {
                     diameter = D[i][j];
                 }

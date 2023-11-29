@@ -21,7 +21,6 @@ insert KenCarson<SEP>ineedu
 insert KenCarson<SEP>Mafia
 insert SZA<SEP>Telekenesis
 insert Uzi<SEP>Hours
-remove song Telekenesis
 insert SZA<SEP>God Country
 insert Future<SEP>Lifes Good
 insert Drake<SEP>Lifes Good
@@ -31,10 +30,8 @@ insert Adele<SEP>Skyfall
 insert Adele<SEP>20 Min
 insert Taylor<SEP>Skyfall
 insert KEYGLOCK<SEP>Flowers
-remove song 20 Min
 insert KEYGLOCK<SEP>GLOCKOMA
 insert Trav<SEP>GLOCKOMA
-remove song Mafia
 insert Metro<SEP>Beats
 insert Kenny<SEP>Beats 2
 insert Pierre<SEP>Beats 3
@@ -42,11 +39,17 @@ insert Metro<SEP>Beats 3
 insert Kenny<SEP>Beats
 insert Metro<SEP>IKNOW?
 insert KenCarson<SEP>Beats 2
-remove artist Drake
 insert Uzi<SEP>fly
 insert KenCarson<SEP>fly
 insert Trav<SEP>One Dance
 insert Kendrick<SEP>Hard to Choose One
 insert Kendrick<SEP>Broken Clocks
+remove song Telekenesis
+remove song 20 Min
+remove song Mafia
+remove artist Drake
+remove song Hard to Choose One
+remove artist Adele
+remove song God Country
+remove artist Kenny
 print graph
-
