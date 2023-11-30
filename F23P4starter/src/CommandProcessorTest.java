@@ -1,8 +1,14 @@
 import java.io.FileNotFoundException;
 import student.TestCase;
 
+/*
+ * Tests the command processor 
+ */
 public class CommandProcessorTest extends TestCase {
 
+    /*
+     * Sets up tests 
+     */
     public void setUp() throws FileNotFoundException {
         int hash = 10;
         String file = "P4sampleInput.txt";
@@ -65,7 +71,7 @@ public class CommandProcessorTest extends TestCase {
             + "|Kenny| is removed from the Artist database.\r\n"
             + "There are 5 connected components\r\n"
             + "The largest connected component has 13 elements\r\n"
-            + "The diameter of the largest component is 4\r\n" + "";
+            + "The diameter of the largest component is 9\r\n" + "";
         assertFuzzyEquals(systemOut().getHistory(), output);
     }
 }

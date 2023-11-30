@@ -12,40 +12,41 @@ public class Graph {
     private int[] parent;
     private int[] count;
     private int size;
-
+    private int[] largestTree;
+    private DLList<Integer> compList;
+    
+    
     @SuppressWarnings("unchecked")
     public Graph(int hashSize) {
         size = hashSize;
         list = new DLList[hashSize];
         numOfNodes = 0;
+        compList = new DLList<Integer>();
     }
-
 
     public int getNumOfNodes() {
         return numOfNodes;
     }
-
 
     public void addNode(Node node) {
         if (numOfNodes >= (size)) {
             expand();
         }
 
-//        int firstEmpty = 0;
-//        for (int i = 0; i < list.length; i++) {
-//            if (list[i] == null) {
-//                firstEmpty = i;
-//                break;
-//            }
-//        }
+        int firstEmpty = 0;
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] == null) {
+                firstEmpty = i;
+                break;
+            }
+        }
 
         DLList<Node> temp = new DLList<Node>();
-        node.setIndex(numOfNodes);
+        node.setIndex(firstEmpty);
         temp.add(node);
-        list[numOfNodes] = temp;
+        list[firstEmpty] = temp;
         numOfNodes++;
     }
-
 
     private void expand() {
         size = size * 2;
@@ -62,7 +63,6 @@ public class Graph {
         temp.add(destNode);
     }
 
-
     public boolean hasEdge(int start, int end) {
         DLList<Node> temp = list[start];
         if (list[end] == null) {
@@ -70,7 +70,7 @@ public class Graph {
         }
         Node destNode = list[end].get(0);
         if (temp != null) {
-            for (int i = 0; i < temp.size(); i++) {
+            for (int i = 1; i < temp.size(); i++) {
                 Node node = temp.get(i);
                 if (node == destNode) {
                     return true;
@@ -90,15 +90,8 @@ public class Graph {
             }
             list[index] = null;
             numOfNodes--;
-            for (int i = index; i < list.length - 1; i++) {
-                list[i] = list[i + 1];
-                if (list[i] != null) {
-                    list[i].get(0).setIndex(i);
-                }
-            }
         }
     }
-
 
     public void print() {
         parent = new int[size];
@@ -126,10 +119,9 @@ public class Graph {
             + " connected components");
         System.out.println("The largest connected component has " + com
             .getElements() + " elements");
-        System.out.println("The diameter of the largest component is " + this
-            .diameter(com.getElements()));
+        System.out.println("The diameter of the largest component is " + com
+            .getDiameter());
     }
-
 
     public void union(int i, int j) {
         int firstRoot = find(i);
@@ -156,14 +148,12 @@ public class Graph {
         }
     }
 
-
     private int find(int curr) {
         while (parent[curr] != -1) {
             curr = parent[curr];
         }
         return curr;
     }
-
 
     public ConnectedComponent ConnectedComponent() {
         ConnectedComponent com = new ConnectedComponent();
@@ -175,7 +165,6 @@ public class Graph {
                 }
             }
         }
-
         int greatestCount = 0;
         int numOfComponents = 0;
         int currentCount = 0;
@@ -193,26 +182,50 @@ public class Graph {
             }
             if (currentCount > greatestCount) {
                 greatestCount = currentCount;
+                compList.clear();
+                compList.add(i);
+            }
+            else if (currentCount == greatestCount && currentCount > 0) {
+                compList.add(i);
             }
             if (currentCount > 0) {
                 numOfComponents++;
             }
         }
-
+        int greatestD = 0;
+        if (compList.size() > 0) {
+            for (int i = 0; i < compList.size(); i++) {
+                largestTree = new int[greatestCount];
+                int treeCount = 0;
+                for (int j = 0; j < parent.length; j++) {
+                    if (parent[j] == compList.get(i)) {
+                        largestTree[treeCount] = j;
+                        treeCount++;
+                    }
+                }
+                largestTree[greatestCount - 1] = compList.get(i);
+                int d = this.diameter(greatestCount);
+                if (d > greatestD)
+                {
+                    greatestD = d;
+                }
+            }
+        }
         com.setConnectedComponents(numOfComponents);
         com.setElements(greatestCount);
+        com.setDiameter(greatestD);
         return com;
     }
 
 
-    public int diameter(int elements) {
+    private int diameter(int elements) {
         int[][] D = new int[elements][elements];
         for (int i = 0; i < elements; i++) {
             for (int j = 0; j < elements; j++) {
                 if (i == j) {
                     D[i][j] = 0;
                 }
-                else if (hasEdge(i, j)) {
+                else if (hasEdge(largestTree[i], largestTree[j])) {
                     D[i][j] = 1;
                 }
                 else {
@@ -220,6 +233,7 @@ public class Graph {
                 }
             }
         }
+
         for (int k = 0; k < elements; k++) {
             for (int i = 0; i < elements; i++) {
                 for (int j = 0; j < elements; j++) {
@@ -231,7 +245,6 @@ public class Graph {
                 }
             }
         }
-
         int diameter = 0;
         for (int i = 0; i < elements; i++) {
             for (int j = 0; j < elements; j++) {
@@ -240,7 +253,6 @@ public class Graph {
                 }
             }
         }
-
         return diameter;
     }
 
