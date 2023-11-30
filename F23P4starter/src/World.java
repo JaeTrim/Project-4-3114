@@ -79,7 +79,7 @@ public class World {
                 + " is added to the Song database.");
         }
 
-        else if (type.equals("artist")) {
+        else {
             artistTable.insert("Artist", record);
             System.out.println("|" + name + "|"
                 + " is added to the Artist database.");
@@ -107,7 +107,7 @@ public class World {
                 songTable.delete("Song", typeName);
             }
         }
-        else if (removeType.equals("artist")) {
+        else {
             if (artistTable.search(typeName) == -1) {
                 System.out.println("|" + typeName + "|"
                     + " does not exist in the Artist database.");
@@ -164,7 +164,7 @@ public class World {
             System.out.println("total artists: " + artistTable
                 .getRecordCount());
         }
-        else if (printType.equals("graph")) {
+        else {
             graph.print();
         }
 

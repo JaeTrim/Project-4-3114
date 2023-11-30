@@ -2,6 +2,7 @@
 /**
  * HashTable class deals with the hash table that stores records of a song or
  * artist and a node
+ * 
  * @author Jae Trimboli (jaetrim)
  * @author Mohammad Mian (mohammadm21)
  * @version 11-07-2023
@@ -71,7 +72,8 @@ public class HashTable {
         int index = Hash.h(record.getKey(), hashSize);
         int home = index;
         int step = 1;
-        while ((hashTable[index] != null) && !(hashTable[index].getKey().equals("TOMBSTONE"))) {
+        while ((hashTable[index] != null) && !(hashTable[index].getKey().equals(
+            "TOMBSTONE"))) {
             index = (home + (step * step)) % hashSize;
             step++;
         }
@@ -85,21 +87,21 @@ public class HashTable {
     /**
      * Deletes from the hash table
      * 
-     * @param recordType
+     * @param removeType
      *            is whether it is a song or an artist for sake of printing
      * @param title
      *            is the name of the artist or song
      */
     public void delete(String removeType, String title) {
         int found = this.search(title);
-        
-            Record temp = new Record();
-            temp.setKey("TOMBSTONE");
-            temp.setIndex(found);
-            hashTable[found] = temp;
-            System.out.println("|" + title + "|" + " is removed from the "
-                + removeType + " database.");
-            recordCount--;
+
+        Record temp = new Record();
+        temp.setKey("TOMBSTONE");
+        temp.setIndex(found);
+        hashTable[found] = temp;
+        System.out.println("|" + title + "|" + " is removed from the "
+            + removeType + " database.");
+        recordCount--;
 
     }
 
@@ -140,7 +142,6 @@ public class HashTable {
         for (int i = 0; i < hashTable.length; i++) {
             if ((hashTable[i] != null) && !(hashTable[i].getKey().equals(
                 "TOMBSTONE"))) {
-                // String tempId = hashTable[i].getKey();
                 updatedHashTable.insert("", hashTable[i]);
             }
         }

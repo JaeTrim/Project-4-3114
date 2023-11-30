@@ -1,13 +1,17 @@
 import java.io.FileNotFoundException;
 import student.TestCase;
 
-/*
- * Tests the command processor 
+/**
+ * Command Processor Class that reads the input file
+ * 
+ * @author Jae Trimboli (jaetrim)
+ * @author Mohammad Mian (mohammadm21)
+ * @version 11-07-2023
  */
 public class CommandProcessorTest extends TestCase {
 
-    /*
-     * Sets up tests 
+    /**
+     * setUp Constructor 
      */
     public void setUp() throws FileNotFoundException {
         int hash = 10;
@@ -15,7 +19,10 @@ public class CommandProcessorTest extends TestCase {
         new CommandProcessor(hash, file);
     }
 
-
+    /**
+     * test the reader
+     * @throws Exception
+     */
     public void testReader() throws Exception {
         String output = "|Drake| is added to the Artist database.\r\n"
             + "|Fair Trade| is added to the Song database.\r\n"

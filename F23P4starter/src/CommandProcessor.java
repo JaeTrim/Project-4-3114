@@ -49,7 +49,7 @@ public class CommandProcessor {
                 if (removeType.equals("song")) {
                     typeName = currentLine.substring(12, currentLine.length());
                 }
-                else if (removeType.equals("artist")) {
+                else {
                     typeName = currentLine.substring(14, currentLine.length());
                 }
 
@@ -64,7 +64,7 @@ public class CommandProcessor {
                 world.insert(insertType, typeName);
                 tempScanner.close();
             }
-            else if (currentLine.contains("print")) {
+            else {
                 String[] printLine = currentLine.split("\\s+");
                 String typeName = printLine[1];
                 world.print(typeName);

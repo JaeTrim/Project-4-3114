@@ -128,7 +128,8 @@ public class DLList<T> {
     /**
      * Removes block at index
      * 
-     * @param index param
+     * @param index
+     *            param
      * @return true if removed
      */
     public boolean remove(int index) {
@@ -180,8 +181,6 @@ public class DLList<T> {
         }
         return curr;
     }
-    
-    
 
     /**
      * Private Node class for doubly linked list
@@ -243,6 +242,7 @@ public class DLList<T> {
         public Node<T> previous() {
             return previous;
         }
+
 
         /**
          * Gets data in node

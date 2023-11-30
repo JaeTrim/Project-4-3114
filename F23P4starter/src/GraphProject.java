@@ -3,8 +3,9 @@
  * Main for Graph project (CS3114/CS5040 Fall 2023 Project 4).
  * Usage: java GraphProject <init-hash-size> <command-file>
  *
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * @author Jae Trimbol (jaetrim)
+ * @author Mohammad Mian (mohammadm21)
+ * @version 11-30-2023
  *
  */
 

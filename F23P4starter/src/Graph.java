@@ -14,8 +14,13 @@ public class Graph {
     private int size;
     private int[] largestTree;
     private DLList<Integer> compList;
-    
-    
+
+    /**
+     * Graph Constructor
+     * 
+     * @param hashSize
+     *            is the initial hashSize
+     */
     @SuppressWarnings("unchecked")
     public Graph(int hashSize) {
         size = hashSize;
@@ -24,10 +29,33 @@ public class Graph {
         compList = new DLList<Integer>();
     }
 
+
+    /**
+     * Gets the list
+     * 
+     * @return the list
+     */
+    public DLList<Node>[] getList() {
+        return list;
+    }
+
+
+    /**
+     * Gets the number of nodes
+     * 
+     * @return the num of ndoes
+     */
     public int getNumOfNodes() {
         return numOfNodes;
     }
 
+
+    /**
+     * Adds a node to the graph
+     * 
+     * @param node
+     *            is the node to be added
+     */
     public void addNode(Node node) {
         if (numOfNodes >= (size)) {
             expand();
@@ -48,6 +76,11 @@ public class Graph {
         numOfNodes++;
     }
 
+
+    /**
+     * Expands the list by creating a new list and using an arraycopy to copy
+     * the values over
+     */
     private void expand() {
         size = size * 2;
         @SuppressWarnings("unchecked")
@@ -57,12 +90,30 @@ public class Graph {
     }
 
 
+    /**
+     * Adds an edge to the graph between two nodes
+     * 
+     * @param start
+     *            is the start index
+     * @param end
+     *            is the end index
+     */
     public void addEdge(int start, int end) {
         DLList<Node> temp = list[start];
         Node destNode = list[end].get(0);
         temp.add(destNode);
     }
 
+
+    /**
+     * Checks if an edge exists between two nodes in the graph
+     * 
+     * @param start
+     *            is the start index of the first node
+     * @param end
+     *            is the end index of the second node
+     * @return true or false if there is an edge
+     */
     public boolean hasEdge(int start, int end) {
         DLList<Node> temp = list[start];
         if (list[end] == null) {
@@ -81,6 +132,12 @@ public class Graph {
     }
 
 
+    /**
+     * Removes a node from the graph
+     * 
+     * @param node
+     *            is the node to be removed
+     */
     public void removeNode(Node node) {
         int index = node.getIndex();
         DLList<Node> tempList = list[index];
@@ -93,6 +150,10 @@ public class Graph {
         }
     }
 
+
+    /**
+     * Prints information about the graph
+     */
     public void print() {
         parent = new int[size];
         for (int n = 0; n < size; n++) {
@@ -113,7 +174,7 @@ public class Graph {
             }
         }
 
-        ConnectedComponent com = this.ConnectedComponent();
+        ConnectedComponent com = this.connectedComponent();
 
         System.out.println("There are " + com.getConnectedComponents()
             + " connected components");
@@ -123,6 +184,15 @@ public class Graph {
             .getDiameter());
     }
 
+
+    /**
+     * Uses the union-find algorithm to determine connected components
+     * 
+     * @param i
+     *            is the first index
+     * @param j
+     *            is the se cond index
+     */
     public void union(int i, int j) {
         int firstRoot = find(i);
         int secondRoot = find(j);
@@ -148,6 +218,13 @@ public class Graph {
         }
     }
 
+
+    /**
+     * Uses the union-find algorithm to determine connected components
+     * 
+     * @param curr
+     *            is the curr index
+     */
     private int find(int curr) {
         while (parent[curr] != -1) {
             curr = parent[curr];
@@ -155,7 +232,15 @@ public class Graph {
         return curr;
     }
 
-    public ConnectedComponent ConnectedComponent() {
+
+    /**
+     * Determines the connected components and extracts information about the
+     * largest connected components
+     * 
+     * @return a connected component object with the num of connected
+     *         components, the size, and diameter
+     */
+    public ConnectedComponent connectedComponent() {
         ConnectedComponent com = new ConnectedComponent();
         for (int i = 0; i < list.length; i++) {
             if (list[i] != null) {
@@ -205,8 +290,7 @@ public class Graph {
                 }
                 largestTree[greatestCount - 1] = compList.get(i);
                 int d = this.diameter(greatestCount);
-                if (d > greatestD)
-                {
+                if (d > greatestD) {
                     greatestD = d;
                 }
             }
@@ -218,18 +302,26 @@ public class Graph {
     }
 
 
+    /**
+     * Uses Floyd's algorithm for finding shortest paths in the graph and the
+     * calculates the diameter from this information
+     * 
+     * @param elements
+     *            is the number of elements in the largest connected component
+     * @return the diamater value of the largest connected component
+     */
     private int diameter(int elements) {
-        int[][] D = new int[elements][elements];
+        int[][] dArray = new int[elements][elements];
         for (int i = 0; i < elements; i++) {
             for (int j = 0; j < elements; j++) {
                 if (i == j) {
-                    D[i][j] = 0;
+                    dArray[i][j] = 0;
                 }
                 else if (hasEdge(largestTree[i], largestTree[j])) {
-                    D[i][j] = 1;
+                    dArray[i][j] = 1;
                 }
                 else {
-                    D[i][j] = Integer.MAX_VALUE;
+                    dArray[i][j] = Integer.MAX_VALUE;
                 }
             }
         }
@@ -237,10 +329,10 @@ public class Graph {
         for (int k = 0; k < elements; k++) {
             for (int i = 0; i < elements; i++) {
                 for (int j = 0; j < elements; j++) {
-                    if (D[i][k] != Integer.MAX_VALUE
-                        && D[k][j] != Integer.MAX_VALUE && (D[i][j] > (D[i][k]
-                            + D[k][j]))) {
-                        D[i][j] = D[i][k] + D[k][j];
+                    if (dArray[i][k] != Integer.MAX_VALUE
+                        && dArray[k][j] != Integer.MAX_VALUE
+                        && (dArray[i][j] > (dArray[i][k] + dArray[k][j]))) {
+                        dArray[i][j] = dArray[i][k] + dArray[k][j];
                     }
                 }
             }
@@ -248,8 +340,9 @@ public class Graph {
         int diameter = 0;
         for (int i = 0; i < elements; i++) {
             for (int j = 0; j < elements; j++) {
-                if (D[i][j] != Integer.MAX_VALUE && D[i][j] > diameter) {
-                    diameter = D[i][j];
+                if (dArray[i][j] != Integer.MAX_VALUE
+                    && dArray[i][j] > diameter) {
+                    diameter = dArray[i][j];
                 }
             }
         }
